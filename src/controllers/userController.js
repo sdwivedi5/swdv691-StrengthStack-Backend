@@ -27,15 +27,18 @@ const {
   }
   },
  
-
-  getUserById: async (req, res) => {
+getUserById: async (req, res) => {
   const {
   id
   } = req.params;
+  const userId = parseInt(id, 10); // Convert id to an integer (base 10)
+  if (isNaN(userId)) {
+  return res.status(400).json({ message: 'Invalid User ID' }); // Handle invalid ID
+  }
   try {
   const result = await client.query(
   'SELECT userid, username, email, traininglevel, goals FROM strengthstack_schema.users WHERE userid = $1',
-  [id]
+  [userId]
   );
   if (result.rows.length === 0) {
   return res.status(404).json({
@@ -49,10 +52,10 @@ const {
   error: 'Server error'
   });
   }
-  },
+ },
  
 
-  createUser: async (req, res) => {
+  /*createUser: async (req, res) => {
   const {
   username,
   email,
@@ -72,7 +75,7 @@ const {
   error: 'Server error'
   });
   }
-  },
+  },*/
  
 
   updateUser: async (req, res) => {
@@ -138,7 +141,7 @@ const {
   } = req.body;
  
 
-  // *** TEMPORARY TEST USER BYPASS (Remove in production!) ***
+  /* *** TEMPORARY TEST USER BYPASS (Remove in production!) ***
   if (username === 'testuser' && password === 'testpassword') {
   console.log('*** TEST USER LOGIN BYPASS ACTIVE! REMOVE IN PRODUCTION! ***');
   return res.json({
@@ -149,7 +152,7 @@ const {
   goals: 'strength'
   }); // Mock user data
   }
- 
+*/ 
 
   try {
   const result = await client.query(
@@ -160,6 +163,8 @@ const {
 
   if (result.rows.length > 0) {
   return res.json(result.rows[0]);
+console.log('Successful login. Sending user data:', userData); // ADD THIS LINE
+   return res.json(userData);
   } else {
   return res.status(401).json({
   message: 'Invalid credentials'
