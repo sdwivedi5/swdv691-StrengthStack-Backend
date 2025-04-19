@@ -4,7 +4,7 @@ const express = require('express');
  
 
  router.get('/', workoutController.getAllWorkouts);
- router.get('/:id', workoutController.getWorkoutById);
+ router.get('/:userId', workoutController.getWorkoutById);
  router.post('/', workoutController.createWorkout);
  router.put('/:id', workoutController.updateWorkout);
  router.delete('/:id', workoutController.deleteWorkout);

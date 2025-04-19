@@ -3,7 +3,7 @@ const express = require('express');
  const progressController = require('../controllers/progressController');
  
 
- router.get('/users/:userId/progress', progressController.getProgressByUser);
+ router.get('/', progressController.getProgressByUser);
  
 
  module.exports = router;
