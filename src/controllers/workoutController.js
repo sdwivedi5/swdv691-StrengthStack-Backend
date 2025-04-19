@@ -33,12 +33,12 @@ const {
   } = req.params;
   try {
   const result = await client.query(
-  'SELECT workoutid, userid, date, exerciseid, sets, reps, weight, rir, rpe FROM strengthstack_schema.workouts WHERE workoutid = $1',
+  'SELECT workoutid, userid, date, exerciseid, sets, reps, weight, rir, rpe FROM strengthstack_schema.workouts WHERE userid = $1',
   [id]
   );
   if (result.rows.length === 0) {
   return res.status(404).json({
-  message: 'Workout not found'
+  message: 'User not found'
   });
   }
   res.json(result.rows[0]);

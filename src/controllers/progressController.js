@@ -11,12 +11,14 @@ const client = new Client({ // Database Client within function
 
 const progressController = {
  getProgressByUser: async (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.query;
   try {
    const result = await client.query(
     'SELECT date, reps, weight, estimatedonerepmax FROM strengthstack_schema.progress WHERE userid = $1 ORDER BY date',
     [userId]
    );
+	     console.log("Progress data from DB:", result.rows); // Add this line
+
    res.json(result.rows);
   } catch (err) {
    console.error('Error fetching progress data:', err);
